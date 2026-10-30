@@ -1,0 +1,47 @@
+# Data and databases (docs/plan/01-data-sources/raw.md)
+data/
+*.duckdb
+*.duckdb.wal
+*.parquet
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Private buyer data (the repo is public)
+profiles/*.yaml
+!profiles/example.yaml
+watchlist.yaml
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.ipynb_checkpoints/
+
+# Web
+node_modules/
+web/.next/
+web/out/
+web/.vercel/
+playwright-report/
+test-results/
+
+# Editors and systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+
+# Claude Code local settings
+.claude/settings.local.json

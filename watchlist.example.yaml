@@ -1,0 +1,10 @@
+# The shape of watchlist.yaml (decision D8). Copy it to watchlist.yaml, which is never committed.
+# A deed whose buyer matches a name below fires the watched_buyer_bought trigger.
+# Names match as recorded on the deed, ignoring case and punctuation. Nothing is guessed:
+# a group that buys through many LLCs needs each LLC listed.
+
+buyers:
+  - name: EXAMPLE DEVELOPMENT LLC
+    note: why you follow this buyer
+  - name: EXAMPLE HOLDINGS LP
+    note: ""

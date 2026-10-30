@@ -1,0 +1,31 @@
+# An example buyer profile: the shape only (docs/plan/06-SITE-REVIEW-AGENT.md § 5).
+# Real profiles live beside this file and are never committed (see .gitignore).
+# Every metric named here must exist in lot_metrics or on the lot card, or the profile fails to load.
+
+id: example_small_multifamily_ground_up
+name: Example, small multifamily ground-up
+description: Sites for a 10 to 50 unit building in the outer boroughs.
+triggers: [demolition_filed, sold, lien_sale_listed, stalled, lot_changed, zoning_changed, submitted]
+boroughs: [BK, QN, BX]
+
+screens:                           # every screen must pass; a failing site is reported as screened out, with the reason
+  - metric: lot_area_sqft
+    min: 2500
+  - metric: unused_floor_area_sqft@v1
+    min: 8000
+  - metric: max_residential_far
+    min: 2.0
+  - metric: is_landmark_or_in_historic_district
+    equals: false
+  - metric: has_open_vacate_order
+    equals: false
+
+show:                              # reported for passing sites, never screened on
+  - last_sale_price_usd
+  - last_sale_price_per_buildable_sqft@v1
+  - walk_distance_to_subway_m@v1
+  - in_mih_area
+  - in_transit_zone
+  - open_violations_by_agency
+  - assessed_market_value_usd
+  - flood_zone_flags

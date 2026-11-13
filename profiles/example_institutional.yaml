@@ -1,0 +1,57 @@
+# An example policy for one developer type (docs/V0.md, "The developer types").
+# The numbers are starting values. Real customer policies live beside this file and are never committed.
+#
+# Every clause is a rule. If a rule fails, the code verdict is Pass. If a rule has no data, it is Review.
+# A rule passes when its metric meets every condition: equals, in, at_least or at_most.
+
+id: institutional
+name: Safe and institutional
+description: Large sites in prime locations, with low risk.
+version: 1
+
+clauses:
+  - id: "1.1"
+    text: The site is in Manhattan or Brooklyn.
+    metric: borough
+    in: [MN, BK]
+
+  - id: "2.1"
+    text: The price is from $10M to $100M.
+    metric: price_usd
+    at_least: 10000000
+    at_most: 100000000
+
+  - id: "3.1"
+    text: The lot area is 10,000 sq ft or more.
+    metric: lot_area_sqft
+    at_least: 10000
+
+  - id: "3.2"
+    text: The unused floor area is 30,000 sq ft or more.
+    metric: unused_floor_area_sqft
+    at_least: 30000
+
+  - id: "4.1"
+    text: The walk to the subway is 8 minutes or less.
+    metric: walk_to_subway_min
+    at_most: 8
+
+  - id: "5.1"
+    text: The site is not a landmark and not in a historic district.
+    metric: is_landmark_or_historic_district
+    equals: false
+
+  - id: "5.2"
+    text: The site is not in the 2015 FEMA flood zone.
+    metric: is_in_2015_flood_zone
+    equals: false
+
+  - id: "5.3"
+    text: The site has no open vacate order.
+    metric: has_open_vacate_order
+    equals: false
+
+# The code verdict from the risk score in profiles/risk_factors.yaml.
+risk_limits:
+  buy_at_most: 20
+  review_at_most: 35

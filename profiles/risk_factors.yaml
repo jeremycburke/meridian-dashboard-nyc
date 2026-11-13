@@ -1,0 +1,73 @@
+# The risk factors behind each site's risk score (docs/V0.md, "The risk score").
+# Every developer type reads the same score. Each policy file sets its own limits.
+# The points and thresholds are starting values. The owner sets them.
+#
+# A factor adds its points when its metric meets its condition:
+# equals, above (more than) or below (less than).
+
+version: 1
+max_score: 100
+
+factors:
+  - id: open_vacate_order
+    text: Open vacate order
+    points: 25
+    metric: has_open_vacate_order
+    equals: true
+    source: hpd_vacate_orders
+
+  - id: landmark_or_historic_district
+    text: Landmark, or inside a historic district
+    points: 20
+    metric: is_landmark_or_historic_district
+    equals: true
+    source: pluto
+
+  - id: flood_zone
+    text: Inside the 2015 FEMA flood zone
+    points: 15
+    metric: is_in_2015_flood_zone
+    equals: true
+    source: pluto
+
+  - id: occupied_homes
+    text: Occupied homes on the lot, so tenants must move
+    points: 15
+    metric: residential_units
+    above: 0
+    source: pluto
+
+  - id: little_unused_floor_area
+    text: Little unused floor area, so a new building needs a rezoning
+    points: 15
+    metric: unused_floor_area_sqft
+    below: 2500
+    source: pluto
+
+  - id: e_designation
+    text: Environmental restriction (E-designation)
+    points: 10
+    metric: has_e_designation
+    equals: true
+    source: pluto
+
+  - id: no_recent_market_sale
+    text: No market sale in the last 12 months, so the price is the city's estimate
+    points: 10
+    metric: has_market_sale_last_12_months
+    equals: false
+    source: rolling_sales
+
+  - id: priced_above_neighborhood
+    text: Price per square foot above the median for the neighborhood
+    points: 10
+    metric: is_price_per_sqft_above_neighborhood_median
+    equals: true
+    source: rolling_sales
+
+  - id: far_from_subway
+    text: A walk of more than 15 minutes to the subway
+    points: 10
+    metric: walk_to_subway_min
+    above: 15
+    source: osm_walk_network, subway_entrances

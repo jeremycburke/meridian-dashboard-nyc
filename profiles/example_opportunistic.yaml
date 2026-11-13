@@ -1,0 +1,31 @@
+# An example policy for one developer type (docs/V0.md, "The developer types").
+# The numbers are starting values. Real customer policies live beside this file and are never committed.
+#
+# Every clause is a rule. If a rule fails, the code verdict is Pass. If a rule has no data, it is Review.
+# A rule passes when its metric meets every condition: equals, in, at_least or at_most.
+
+id: opportunistic
+name: Opportunistic
+description: Smaller or distressed sites anywhere in the city, with high risk.
+version: 1
+
+clauses:
+  - id: "1.1"
+    text: The site is in any of the five boroughs.
+    metric: borough
+    in: [MN, BK, QN, BX, SI]
+
+  - id: "2.1"
+    text: The price is $15M or less.
+    metric: price_usd
+    at_most: 15000000
+
+  - id: "3.1"
+    text: The lot area is 1,800 sq ft or more.
+    metric: lot_area_sqft
+    at_least: 1800
+
+# The code verdict from the risk score in profiles/risk_factors.yaml.
+risk_limits:
+  buy_at_most: 65
+  review_at_most: 85

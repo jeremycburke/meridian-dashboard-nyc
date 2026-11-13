@@ -1,0 +1,47 @@
+# An example policy for one developer type (docs/V0.md, "The developer types").
+# The numbers are starting values. Real customer policies live beside this file and are never committed.
+#
+# Every clause is a rule. If a rule fails, the code verdict is Pass. If a rule has no data, it is Review.
+# A rule passes when its metric meets every condition: equals, in, at_least or at_most.
+
+id: standard
+name: Standard
+description: Mid-size sites in four boroughs, with medium risk.
+version: 1
+
+clauses:
+  - id: "1.1"
+    text: The site is in Manhattan, Brooklyn, Queens or the Bronx.
+    metric: borough
+    in: [MN, BK, QN, BX]
+
+  - id: "2.1"
+    text: The price is from $2M to $25M.
+    metric: price_usd
+    at_least: 2000000
+    at_most: 25000000
+
+  - id: "3.1"
+    text: The lot area is 2,500 sq ft or more.
+    metric: lot_area_sqft
+    at_least: 2500
+
+  - id: "3.2"
+    text: The unused floor area is 8,000 sq ft or more.
+    metric: unused_floor_area_sqft
+    at_least: 8000
+
+  - id: "4.1"
+    text: The walk to the subway is 12 minutes or less.
+    metric: walk_to_subway_min
+    at_most: 12
+
+  - id: "5.1"
+    text: The site is not a landmark and not in a historic district.
+    metric: is_landmark_or_historic_district
+    equals: false
+
+# The code verdict from the risk score in profiles/risk_factors.yaml.
+risk_limits:
+  buy_at_most: 40
+  review_at_most: 60
